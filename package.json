@@ -58,7 +58,7 @@
     "pelias-logger": "0.1.0",
     "pelias-model": "4.5.1",
     "pelias-query": "8.13.0",
-    "pelias-text-analyzer": "1.7.2",
+    "pelias-text-analyzer": "git+https://github.com/1001cabs/text-analyzer.git#master",
     "retry": "^0.10.1",
     "stats-lite": "2.0.3",
     "superagent": "^3.2.1",

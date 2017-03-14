@@ -27,7 +27,7 @@ var controllers = {
 };
 
 var queries = {
-  libpostal: require('../query/search'),
+  libpostal: require('../query/search_libpostal'),
   fallback_to_old_prod: require('../query/search_original'),
   structured_geocoding: require('../query/structured_geocoding'),
   reverse: require('../query/reverse'),
