@@ -2,7 +2,7 @@
 
 const peliasQuery = require('pelias-query');
 const defaults = require('./search_custom');
-const textParser = require('./text_parser_addressit');
+const textParser = require('./text_parser');
 const check = require('check-types');
 const logger = require('pelias-logger').get('api');
 
@@ -62,7 +62,15 @@ function generateQuery( clean ){
   let logStr = '[query:search] [parser:libpostal] ';
 
   // input text
-  vs.var( 'input:name', clean.text );
+  if (clean.parsed_text){
+    var concat = '';
+    for (var prop in clean.parsed_text){
+      concat += clean.parsed_text[prop] + ' ';
+    }
+    vs.var( 'input:name', concat);
+  } else {
+    vs.var( 'input:name', clean.text );
+  }
 
   // sources
   if( check.array(clean.sources) && clean.sources.length ) {
@@ -143,11 +151,13 @@ function generateQuery( clean ){
   }
 
   logger.info(logStr);
-
-  return {
+  
+  var esRequest = {
     type: 'libpostal',
     body: query.render(vs)
   };
+  
+  return esRequest;
 }
 
 
