@@ -101,9 +101,17 @@ function generateQuery( clean ){
       check.number(clean['focus.point.lon']) ){
     vs.set({
       'focus:point:lat': clean['focus.point.lat'],
-      'focus:point:lon': clean['focus.point.lon']
+      'focus:point:lon': clean['focus.point.lon'],
+      'boundary:circle:lat': clean['focus.point.lat'],
+      'boundary:circle:lon': clean['focus.point.lon']
     });
+    if( check.number(clean['boundary.circle.radius']) ){
+      vs.set({
+        'boundary:circle:radius': Math.round( clean['boundary.circle.radius'] ) + 'km'
+      });
+    }
     logStr += '[param:focus_point] ';
+    logStr += '[param:boundary_circle] ';
   }
 
   // boundary rect
