@@ -161,7 +161,7 @@ function generateQuery( clean ){
   logger.info(logStr);
   
   var esRequest = {
-    type: 'libpostal',
+    type: 'original',
     body: query.render(vs)
   };
   
