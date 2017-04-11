@@ -12,10 +12,16 @@ module.exports = {
                     'boost': 5,
                     'must': [
                       {
-                        'match_phrase': {
-                          'address_parts.street': 'street value'
-                        }
-                      }
+						'fuzzy': {
+						  'address_parts.street': {
+						  'value': 'street value',
+						  'boost' :         1.0,
+						  'fuzziness' :     2,
+						  'prefix_length' : 3,
+						  'max_expansions': 50
+						  }
+						}
+					  }
                     ],
                     'should': [],
                     'filter': {
