@@ -35,7 +35,7 @@ module.exports = {
             }
           },
           'functions': [{
-            'linear': {
+            'exp': {
               'center_point': {
                 'origin': {
                   'lat': 0,
@@ -46,7 +46,7 @@ module.exports = {
                 'decay': 0.5
               }
             },
-            'weight': 2
+            'weight': 10
           }],
           'score_mode': 'avg',
           'boost_mode': 'replace'

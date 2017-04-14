@@ -1,7 +1,7 @@
 'use strict';
 
 const peliasQuery = require('pelias-query');
-const defaults = require('./search_defaults');
+const defaults = require('./search_1001Cabs');
 const textParser = require('./text_parser_addressit');
 const check = require('check-types');
 const logger = require('pelias-logger').get('api');
