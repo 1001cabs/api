@@ -86,8 +86,76 @@ function addParsedVariablesToQueryVariables( parsed_text, vs ){
   if (shouldSetQueryIntoHouseNumber(vs)) {
     vs.var( 'input:housenumber', vs.var('input:query').toString());
     vs.unset( 'input:query' );
-  }
+  } else if ( ! _.isEmpty(parsed_text.query) && !shouldSetQueryIntoHouseNumber(vs) ) {
 
+    var tmpQuery = '';
+      
+    for (var prop in parsed_text){
+      if (tmpQuery === '') {
+        tmpQuery = parsed_text[prop];
+      } else {
+        tmpQuery = tmpQuery + ' ' + parsed_text[prop];
+      }
+    }
+      
+    vs.var('input:query', tmpQuery);
+    
+    // Unset all other components
+    if ( ! _.isEmpty(parsed_text.category) ) {
+      vs.unset('input:category');
+    }
+    
+    if ( ! _.isEmpty(parsed_text.address) ) {
+      vs.unset( 'input:address');
+    }
+    
+    // house number
+    if( ! _.isEmpty(parsed_text.number) ){
+      vs.unset( 'input:housenumber');
+    }
+    
+    // street name
+    if( ! _.isEmpty(parsed_text.street) ){
+      vs.unset( 'input:street');
+    }
+    
+    // neighbourhood
+    if ( ! _.isEmpty(parsed_text.neighbourhood) ) {
+      vs.unset( 'input:neighbourhood');
+    }
+    
+    // borough
+    if ( ! _.isEmpty(parsed_text.borough) ) {
+      vs.unset( 'input:borough');
+    }
+    
+    // postal code
+    if( ! _.isEmpty(parsed_text.postalcode) ){
+      vs.unset( 'input:postcode');
+    }
+    
+    // ==== add parsed matches [admin components] ====
+    
+    // city
+    if( ! _.isEmpty(parsed_text.city) ){
+      vs.unset( 'input:locality');
+    }
+    
+    // county
+    if( ! _.isEmpty(parsed_text.county) ){
+      vs.unset( 'input:county');
+    }
+    
+    // state
+    if( ! _.isEmpty(parsed_text.state) ){
+      vs.unset( 'input:region');
+    }
+    
+    // country
+    if( ! _.isEmpty(parsed_text.country) ){
+      vs.unset( 'input:country');
+    }
+  }
 }
 
 function shouldSetQueryIntoHouseNumber(vs) {

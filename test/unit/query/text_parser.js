@@ -51,21 +51,26 @@ module.exports.tests.query = function(test, common) {
     var vs = new VariableStore();
 
     text_parser(parsed_text, vs);
-
-    t.equals(vs.var('input:query').toString(), 'query value');
-    t.equals(vs.var('input:category').toString(), 'category value');
-    t.equals(vs.var('input:housenumber').toString(), 'number value');
-    t.equals(vs.var('input:street').toString(), 'street value');
-    t.equals(vs.var('input:address').toString(), 'address value');
-    t.equals(vs.var('input:neighbourhood').toString(), 'neighbourhood value');
-    t.equals(vs.var('input:borough').toString(), 'borough value');
-    t.equals(vs.var('input:postcode').toString(), 'postalcode value');
-    t.equals(vs.var('input:locality').toString(), 'city value');
-    t.equals(vs.var('input:county').toString(), 'county value');
-    t.equals(vs.var('input:region').toString(), 'state value');
-    t.equals(vs.var('input:country').toString(), 'country value');
-    t.end();
-
+	
+	if (!vs.isset('input:query')){
+		t.equals(vs.var('input:category').toString(), 'category value');
+		t.equals(vs.var('input:housenumber').toString(), 'number value');
+		t.equals(vs.var('input:street').toString(), 'street value');
+		t.equals(vs.var('input:address').toString(), 'address value');
+		t.equals(vs.var('input:neighbourhood').toString(), 'neighbourhood value');
+		t.equals(vs.var('input:borough').toString(), 'borough value');
+		t.equals(vs.var('input:postcode').toString(), 'postalcode value');
+		t.equals(vs.var('input:locality').toString(), 'city value');
+		t.equals(vs.var('input:county').toString(), 'county value');
+		t.equals(vs.var('input:region').toString(), 'state value');
+		t.equals(vs.var('input:country').toString(), 'country value');
+		t.end();
+	} else {
+		t.equals(vs.var('input:query').toString(), 'query value category value number value street value address value ' + 
+		'neighbourhood value borough value postalcode value city value county value state value country value');
+    	t.end();
+	}
+        
   });
 
 };
@@ -99,9 +104,9 @@ module.exports.tests.housenumber_special_cases = function(test, common) {
 
     text_parser(parsed_text, vs);
 
-    t.equals(vs.var('input:query').toString(), '17');
-    t.equals(vs.var('input:housenumber').toString(), 'housenumber value');
-    t.equals(vs.var('input:street').toString(), 'street value');
+    t.equals(vs.var('input:query').toString(), '17 housenumber value street value');
+    t.false(vs.isset('input:housenumber'));
+    t.false(vs.isset('input:street'));
     t.end();
 
   });
@@ -116,8 +121,8 @@ module.exports.tests.housenumber_special_cases = function(test, common) {
 
     text_parser(parsed_text, vs);
 
-    t.equals(vs.var('input:query').toString(), '17');
-    t.equals(vs.var('input:housenumber').toString(), 'number value');
+    t.equals(vs.var('input:query').toString(), '17 number value');
+	t.false(vs.isset('input:housenumber'));
     t.false(vs.isset('input:street'));
     t.end();
 
@@ -148,9 +153,9 @@ module.exports.tests.housenumber_special_cases = function(test, common) {
 
     text_parser(parsed_text, vs);
 
-    t.equals(vs.var('input:query').toString(), '13 this is 15 not a number 17');
+    t.equals(vs.var('input:query').toString(), '13 this is 15 not a number 17 street value');
     t.false(vs.isset('input:housenumber'));
-    t.equals(vs.var('input:street').toString(), 'street value');
+    t.false(vs.isset('input:street'));
     t.end();
 
   });

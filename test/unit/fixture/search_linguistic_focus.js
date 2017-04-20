@@ -3,37 +3,6 @@ module.exports = {
     'function_score': {
       'query': {
         'filtered': {
-          'query': {
-            'bool': {
-              'should': [
-                {
-                  'bool': {
-                    '_name': 'fallback.street',
-                    'boost': 5,
-                    'must': [
-                      {
-						'fuzzy': {
-						  'address_parts.street': {
-						  'value': 'street value',
-						  'boost' :         1.0,
-						  'fuzziness' :     2,
-						  'prefix_length' : 3,
-						  'max_expansions': 50
-						  }
-						}
-					  }
-                    ],
-                    'should': [],
-                    'filter': {
-                      'term': {
-                        'layer': 'street'
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
           'filter': {
             'bool': {
               'must': [
@@ -46,13 +15,76 @@ module.exports = {
                 }
               ]
             }
+          },
+		  'query': {
+            'bool': {
+              'should': [
+                {
+                  'bool': {
+                    '_name': 'fallback.street',
+                    'must': [
+                      {
+						'fuzzy': {
+						  'address_parts.street': {
+						  'value': 'street value',
+						  'boost' :         1,
+						  'fuzziness' :     'AUTO',
+						  'prefix_length' : 3,
+						  'max_expansions': 10
+						  }
+						}
+					  }
+                    ],
+                    'should': [],
+                    'filter': {
+                      'term': {
+                        'layer': 'street'
+                      }
+                    },
+                    'boost': 5
+                  }
+                },
+				{
+                  'bool': {
+                    '_name': 'fallback.streetaddress',
+                    'must': [
+                      {
+						'query': {
+						  'wildcard': {
+							'address_parts.number': '*'
+						  }
+						}
+					  },
+					  {
+						'fuzzy': {
+						  'address_parts.street': {
+						  'value': 'street value',
+						  'boost' :         1,
+						  'fuzziness' :     'AUTO',
+						  'prefix_length' : 3,
+						  'max_expansions': 10
+						  }
+						}
+					  }
+                    ],
+                    'should': [],
+                    'filter': {
+                      'term': {
+                        'layer': 'address'
+                      }
+                    },
+                    'boost': 5
+                  }
+                }
+              ]
+            }
           }
         }
       },
       'max_boost': 20,
       'functions': [
         {
-          'weight': 10,
+          'weight': 1,
           'exp': {
             'center_point': {
               'origin': {
@@ -86,9 +118,9 @@ module.exports = {
       'boost_mode': 'multiply'
     }
   },
-  'size': 10,
-  'track_scores': true,
   'sort': [
     '_score'
-  ]
+  ],
+  'size': 10,
+  'track_scores': true
 };

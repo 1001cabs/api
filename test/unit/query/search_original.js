@@ -25,7 +25,7 @@ module.exports.tests.query = function(test, common) {
     var expected = require('../fixture/search_linguistic_focus_bbox_original');
 
     t.deepEqual(compiled.type, 'original', 'query type set');
-    t.deepEqual(compiled.body.query.bool.should, expected.query.bool.should, 'search_linguistic_focus_bbox');
+    t.deepEqual(compiled.body, expected, 'search_linguistic_focus_bbox');
     t.end();
   });
 

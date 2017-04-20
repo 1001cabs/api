@@ -9,16 +9,15 @@ module.exports = {
                 {
                   'bool': {
                     '_name': 'fallback.street',
-                    'boost': 5,
                     'must': [
                       {
 						'fuzzy': {
 						  'address_parts.street': {
 						  'value': 'street value',
-						  'boost' :         1.0,
-						  'fuzziness' :     2,
+						  'boost' :         1,
+						  'fuzziness' :     'AUTO',
 						  'prefix_length' : 3,
-						  'max_expansions': 50
+						  'max_expansions': 10
 						  }
 						}
 					  }
@@ -28,7 +27,40 @@ module.exports = {
                       'term': {
                         'layer': 'street'
                       }
-                    }
+                    },
+                    'boost': 5
+                  }
+                },
+				{
+                  'bool': {
+                    '_name': 'fallback.streetaddress',
+                    'must': [
+                      {
+						'query': {
+						  'wildcard': {
+							'address_parts.number': '*'
+						  }
+						}
+					  },
+					  {
+						'fuzzy': {
+						  'address_parts.street': {
+						  'value': 'street value',
+						  'boost' :         1,
+						  'fuzziness' :     'AUTO',
+						  'prefix_length' : 3,
+						  'max_expansions': 10
+						  }
+						}
+					  }
+                    ],
+                    'should': [],
+                    'filter': {
+                      'term': {
+                        'layer': 'address'
+                      }
+                    },
+                    'boost': 5
                   }
                 }
               ]
@@ -83,9 +115,9 @@ module.exports = {
       'boost_mode': 'multiply'
     }
   },
-  'size': 10,
-  'track_scores': true,
   'sort': [
     '_score'
-  ]
+  ],
+  'size': 10,
+  'track_scores': true
 };

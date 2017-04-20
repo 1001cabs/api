@@ -8,95 +8,6 @@ module.exports = {
               'should': [
                 {
                   'bool': {
-                    '_name': 'fallback.venue',
-                    'must': [
-                      {
-                        'multi_match': {
-                          'query': 'query value',
-                          'type': 'phrase',
-                          'fields': [
-                            'phrase.default'
-                          ]
-                        }
-                      },
-                      {
-                        'multi_match': {
-                          'query': 'neighbourhood value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.neighbourhood',
-                            'parent.neighbourhood_a'
-                          ]
-                        }
-                      },
-                      {
-                        'multi_match': {
-                          'query': 'borough value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.borough',
-                            'parent.borough_a'
-                          ]
-                        }
-                      },
-                      {
-                        'multi_match': {
-                          'query': 'city value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.locality',
-                            'parent.locality_a',
-                            'parent.localadmin',
-                            'parent.localadmin_a'
-                          ]
-                        }
-                      },
-                      {
-                        'multi_match': {
-                          'query': 'county value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.county',
-                            'parent.county_a',
-                            'parent.macrocounty',
-                            'parent.macrocounty_a'
-                          ]
-                        }
-                      },
-                      {
-                        'multi_match': {
-                          'query': 'state value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.region',
-                            'parent.region_a',
-                            'parent.macroregion',
-                            'parent.macroregion_a'
-                          ]
-                        }
-                      },
-                      {
-                        'multi_match': {
-                          'query': 'country value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.country',
-                            'parent.country_a',
-                            'parent.dependency',
-                            'parent.dependency_a'
-                          ]
-                        }
-                      }
-                    ],
-                    'filter': {
-                      'term': {
-                        'layer': 'venue'
-                      }
-                    }
-                  }
-                },
-                {
-                  'bool': {
                     '_name': 'fallback.address',
                     'boost': 10,
                     'must': [
@@ -109,10 +20,10 @@ module.exports = {
 						'fuzzy': {
 						  'address_parts.street': {
 						  'value': 'street value',
-						  'boost' :         1.0,
-						  'fuzziness' :     2,
+						  'boost' :         1,
+						  'fuzziness' :     'AUTO',
 						  'prefix_length' : 3,
-						  'max_expansions': 50
+						  'max_expansions': 10
 						  }
 						}
 					  },
@@ -277,10 +188,10 @@ module.exports = {
 						'fuzzy': {
 						  'address_parts.street': {
 						  'value': 'street value',
-						  'boost' :         1.0,
-						  'fuzziness' :     2,
+						  'boost' :         1,
+						  'fuzziness' :     'AUTO',
 						  'prefix_length' : 3,
-						  'max_expansions': 50
+						  'max_expansions': 10
 						  }
 						}
 					  },
@@ -513,122 +424,6 @@ module.exports = {
                     'filter': {
                       'term': {
                         'layer': 'borough'
-                      }
-                    }
-                  }
-                },
-                {
-                  'bool': {
-                    '_name': 'fallback.locality',
-                    'must': [
-                      {
-                        'multi_match': {
-                          'query': 'city value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.locality',
-                            'parent.locality_a'
-                          ]
-                        }
-                      },
-                      {
-                        'multi_match': {
-                          'query': 'county value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.county',
-                            'parent.county_a',
-                            'parent.macrocounty',
-                            'parent.macrocounty_a'
-                          ]
-                        }
-                      },
-                      {
-                        'multi_match': {
-                          'query': 'state value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.region',
-                            'parent.region_a',
-                            'parent.macroregion',
-                            'parent.macroregion_a'
-                          ]
-                        }
-                      },
-                      {
-                        'multi_match': {
-                          'query': 'country value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.country',
-                            'parent.country_a',
-                            'parent.dependency',
-                            'parent.dependency_a'
-                          ]
-                        }
-                      }
-                    ],
-                    'filter': {
-                      'term': {
-                        'layer': 'locality'
-                      }
-                    }
-                  }
-                },
-                {
-                  'bool': {
-                    '_name': 'fallback.localadmin',
-                    'must': [
-                      {
-                        'multi_match': {
-                          'query': 'city value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.localadmin',
-                            'parent.localadmin_a'
-                          ]
-                        }
-                      },
-                      {
-                        'multi_match': {
-                          'query': 'county value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.county',
-                            'parent.county_a',
-                            'parent.macrocounty',
-                            'parent.macrocounty_a'
-                          ]
-                        }
-                      },
-                      {
-                        'multi_match': {
-                          'query': 'state value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.region',
-                            'parent.region_a',
-                            'parent.macroregion',
-                            'parent.macroregion_a'
-                          ]
-                        }
-                      },
-                      {
-                        'multi_match': {
-                          'query': 'country value',
-                          'type': 'phrase',
-                          'fields': [
-                            'parent.country',
-                            'parent.country_a',
-                            'parent.dependency',
-                            'parent.dependency_a'
-                          ]
-                        }
-                      }
-                    ],
-                    'filter': {
-                      'term': {
-                        'layer': 'localadmin'
                       }
                     }
                   }
@@ -869,10 +664,10 @@ module.exports = {
       'score_mode': 'avg',
       'boost_mode': 'multiply'
     }
-  },
+  } ,
   'size': 20,
   'track_scores': true,
   'sort': [
     '_score'
-  ]
+  ] 
 };

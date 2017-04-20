@@ -163,7 +163,7 @@ module.exports.tests.query = function(test, common) {
   test('parsed_text with all fields should use FallbackQuery', function(t) {
     var clean = {
       parsed_text: {
-        query: 'query value',
+        /* query: 'query value', */
         category: 'category value',
         number: 'number value',
         street: 'street value',

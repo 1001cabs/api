@@ -46,7 +46,7 @@ module.exports = {
                 'decay': 0.5
               }
             },
-            'weight': 10
+            'weight': 1
           }],
           'score_mode': 'avg',
           'boost_mode': 'replace'

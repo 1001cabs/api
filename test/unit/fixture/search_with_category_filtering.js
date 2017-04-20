@@ -15,10 +15,10 @@ module.exports = {
 						'fuzzy': {
 						  'address_parts.street': {
 						  'value': 'street value',
-						  'boost' :         1.0,
-						  'fuzziness' :     2,
+						  'boost' :         1,
+						  'fuzziness' :     'AUTO',
 						  'prefix_length' : 3,
-						  'max_expansions': 50
+						  'max_expansions': 10
 						  }
 						}
 					  }
@@ -29,6 +29,38 @@ module.exports = {
                         'layer': 'street'
                       }
                     }
+                  }
+                },
+				{
+                  'bool': {
+                    '_name': 'fallback.streetaddress',
+                    'must': [
+                      {
+						'query': {
+						  'wildcard': {
+							'address_parts.number': '*'
+						  }
+						}
+					  },
+					  {
+						'fuzzy': {
+						  'address_parts.street': {
+						  'value': 'street value',
+						  'boost' :         1,
+						  'fuzziness' :     'AUTO',
+						  'prefix_length' : 3,
+						  'max_expansions': 10
+						  }
+						}
+					  }
+                    ],
+                    'should': [],
+                    'filter': {
+                      'term': {
+                        'layer': 'address'
+                      }
+                    },
+                    'boost': 5
                   }
                 }
               ]
