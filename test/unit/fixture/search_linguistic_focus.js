@@ -65,7 +65,19 @@ module.exports = {
 						  'max_expansions': 10
 						  }
 						}
-					  }
+					  },
+                      {
+                        'multi_match': {
+                          'query': 'street value',
+                          'type': 'phrase',
+                          'fields': [
+                            'parent.locality',
+                            'parent.locality_a',
+                            'parent.localadmin',
+                            'parent.localadmin_a'
+                          ]
+                        }
+                      }
                     ],
                     'should': [],
                     'filter': {

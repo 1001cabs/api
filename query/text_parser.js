@@ -49,6 +49,8 @@ function addParsedVariablesToQueryVariables( parsed_text, vs ){
   // city
   if( ! _.isEmpty(parsed_text.city) ){
     vs.var( 'input:locality', parsed_text.city );
+  } else if (! _.isEmpty(parsed_text.street) && _.isEmpty(parsed_text.city)){
+    vs.var( 'input:locality', parsed_text.street );
   }
 
   // county
