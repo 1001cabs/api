@@ -113,7 +113,17 @@ module.exports = {
       ]
     }
   },
-  'sort': [ '_score' ],
   'size': 10,
+  'sort': [ '_score',
+    {
+      '_geo_distance': {
+        'order': 'asc',
+        'distance_type': 'plane',
+        'center_point': {
+        'lat': 29.49136,
+        'lon': -82.50622
+        }
+      }
+    } ],
   'track_scores': true
 };

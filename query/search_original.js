@@ -49,6 +49,9 @@ query.filter( peliasQuery.view.sources );
 query.filter( peliasQuery.view.layers );
 query.filter( peliasQuery.view.categories );
 
+// sort according to distance from focus point
+query.sort(peliasQuery.view.sort_distance);
+
 // --------------------------------
 
 /**

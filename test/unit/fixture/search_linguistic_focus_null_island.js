@@ -131,7 +131,17 @@ module.exports = {
     }
   },
   'sort': [
-    '_score'
+    '_score',
+    {
+      '_geo_distance': {
+        'order': 'asc',
+        'distance_type': 'plane',
+        'center_point': {
+        'lat': 0,
+        'lon': 0
+        }
+      }
+    }
   ],
   'size': 10,
   'track_scores': true

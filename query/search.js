@@ -20,6 +20,10 @@ fallbackQuery.score( peliasQuery.view.population_only_function );
 geodisambiguationQuery.score( peliasQuery.view.focus_only_function( peliasQuery.view.phrase ) );
 geodisambiguationQuery.score( peliasQuery.view.popularity_only_function );
 geodisambiguationQuery.score( peliasQuery.view.population_only_function );
+
+// sort according to distance from focus point
+fallbackQuery.sort(peliasQuery.view.sort_distance);
+
 // --------------------------------
 
 // non-scoring hard filters

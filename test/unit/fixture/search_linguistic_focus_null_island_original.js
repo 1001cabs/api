@@ -111,7 +111,17 @@ module.exports = {
       }]
     }
   },
-  'sort': [ '_score' ],
   'size': 10,
+  'sort': [ '_score',
+	{
+      '_geo_distance': {
+        'order': 'asc',
+        'distance_type': 'plane',
+        'center_point': {
+        'lat': 0,
+        'lon': 0
+        }
+      }
+    }  ],
   'track_scores': true
 };
